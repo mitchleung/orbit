@@ -1,0 +1,336 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  position: relative;
+}
+
+.universe {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+}
+@media screen and (min-width: 1024px) {
+  .universe {
+    max-width: 50vw;
+  }
+}
+
+.orbit {
+  position: relative;
+  margin: auto;
+  padding: 100% 0 0;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.orbit .sun {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 30vw;
+  height: 30vw;
+  border-radius: 1vw;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  z-index: 2;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .sun {
+    border-radius: 2w;
+    width: 15vw;
+    height: 15vw;
+  }
+}
+.orbit .sun img {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.orbit .sun img:nth-child(2) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.orbit .sun:hover img:nth-child(2) {
+  opacity: 1;
+}
+@keyframes planet-rotation {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes planet-pulsing {
+  50% {
+    transform: scaleX(0.9) scaleY(0.9);
+  }
+}
+.orbit .planets {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  width: 20vw;
+  height: 20vw;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets {
+    width: 10vw;
+    height: 10vw;
+  }
+}
+.orbit .planets ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  transform-origin: center;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  animation: 60s linear 0s infinite forwards planet-rotation;
+}
+.orbit .planets ul li {
+  position: absolute;
+  width: 20vw;
+  height: 20vw;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  transform-origin: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0px 6px 12px rgba(19, 50, 82, 0.1);
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li {
+    width: 10vw;
+    height: 10vw;
+  }
+}
+.orbit .planets ul li a {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.orbit .planets ul li img {
+  position: relative;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 45%;
+  animation: 60s linear 0s infinite reverse planet-rotation;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li img {
+    max-width: none;
+  }
+}
+.orbit .planets ul li span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 10% 11%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  color: #fff;
+  font-size: clamp(0.75rem, 1vw - 0.5rem, 1.5rem);
+  animation: 60s linear 0s infinite reverse planet-rotation;
+}
+.orbit .planets ul li:hover span {
+  opacity: 1;
+}
+.orbit .planets ul li:nth-child(1) {
+  top: -23.3345237792vw;
+  left: 23.3345237792vw;
+  background-color: rgb(208, 153, 213);
+  animation: 2s linear 500ms infinite forwards planet-pulsing;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li:nth-child(1) {
+    top: -12.7279220614vw;
+    left: 12.7279220614vw;
+  }
+}
+.orbit .planets ul li:nth-child(1) a {
+  animation: none;
+}
+.orbit .planets ul li:nth-child(1) span {
+  background-color: #701778;
+}
+.orbit .planets ul li:nth-child(2) {
+  top: -33vw;
+  left: 0vw;
+  background-color: rgb(157, 220, 160);
+  animation: 2s linear 1000ms infinite forwards planet-pulsing;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li:nth-child(2) {
+    top: -18vw;
+    left: 0vw;
+  }
+}
+.orbit .planets ul li:nth-child(2) a {
+  animation: none;
+}
+.orbit .planets ul li:nth-child(2) span {
+  background-color: #1e8323;
+}
+.orbit .planets ul li:nth-child(3) {
+  top: -23.3345237792vw;
+  left: -23.3345237792vw;
+  background-color: rgb(157, 188, 220);
+  animation: 2s linear 1500ms infinite forwards planet-pulsing;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li:nth-child(3) {
+    top: -12.7279220614vw;
+    left: -12.7279220614vw;
+  }
+}
+.orbit .planets ul li:nth-child(3) a {
+  animation: none;
+}
+.orbit .planets ul li:nth-child(3) span {
+  background-color: #1e5083;
+}
+.orbit .planets ul li:nth-child(4) {
+  top: 0vw;
+  left: -33vw;
+  background-color: rgb(251, 203, 140);
+  animation: 2s linear 2000ms infinite forwards planet-pulsing;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li:nth-child(4) {
+    top: 0vw;
+    left: -18vw;
+  }
+}
+.orbit .planets ul li:nth-child(4) a {
+  animation: none;
+}
+.orbit .planets ul li:nth-child(4) span {
+  background-color: #d07908;
+}
+.orbit .planets ul li:nth-child(5) {
+  top: 23.3345237792vw;
+  left: -23.3345237792vw;
+  background-color: rgb(167, 175, 221);
+  animation: 2s linear 2500ms infinite forwards planet-pulsing;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li:nth-child(5) {
+    top: 12.7279220614vw;
+    left: -12.7279220614vw;
+  }
+}
+.orbit .planets ul li:nth-child(5) a {
+  animation: none;
+}
+.orbit .planets ul li:nth-child(5) span {
+  background-color: #2e3b84;
+}
+.orbit .planets ul li:nth-child(6) {
+  top: 33vw;
+  left: 0vw;
+  background-color: rgb(242, 234, 160);
+  animation: 2s linear 3000ms infinite forwards planet-pulsing;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li:nth-child(6) {
+    top: 18vw;
+    left: 0vw;
+  }
+}
+.orbit .planets ul li:nth-child(6) a {
+  animation: none;
+}
+.orbit .planets ul li:nth-child(6) span {
+  background-color: #686016;
+}
+.orbit .planets ul li:nth-child(7) {
+  top: 23.3345237792vw;
+  left: 23.3345237792vw;
+  background-color: rgb(208, 164, 142);
+  animation: 2s linear 3500ms infinite forwards planet-pulsing;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li:nth-child(7) {
+    top: 12.7279220614vw;
+    left: 12.7279220614vw;
+  }
+}
+.orbit .planets ul li:nth-child(7) a {
+  animation: none;
+}
+.orbit .planets ul li:nth-child(7) span {
+  background-color: #7f5c4c;
+}
+.orbit .planets ul li:nth-child(8) {
+  top: 0vw;
+  left: 33vw;
+  background-color: rgb(230, 158, 158);
+  animation: 2s linear 4000ms infinite forwards planet-pulsing;
+}
+@media screen and (min-width: 1024px) {
+  .orbit .planets ul li:nth-child(8) {
+    top: 0vw;
+    left: 18vw;
+  }
+}
+.orbit .planets ul li:nth-child(8) a {
+  animation: none;
+}
+.orbit .planets ul li:nth-child(8) span {
+  background-color: #932020;
+}
+.orbit .planets ul:hover {
+  animation-play-state: paused;
+}
+.orbit .planets ul:hover li:hover {
+  animation-play-state: paused;
+}
+.orbit .planets ul:hover li span,
+.orbit .planets ul:hover li img {
+  animation-play-state: paused;
+}
+
+/*# sourceMappingURL=style.css.map */

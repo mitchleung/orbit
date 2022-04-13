@@ -1,0 +1,266 @@
+@use "sass:color";
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
+
+$planet-list: (
+  ("person", #701778, rgb(208, 153, 213)),
+  ("calendar", #1e8323, rgb(157, 220, 160)),
+  ("analytics", #1e5083, rgb(157, 188, 220)),
+  ("law", #d07908, rgb(251, 203, 140)),
+  ("travel", #2e3b84, rgb(167, 175, 221)),
+  ("exit", #686016, rgb(242, 234, 160)),
+  ("leave", #7f5c4c, rgb(208, 164, 142)),
+  ("hris", #932020, rgb(230, 158, 158))
+);
+
+$sun-dimension: (30vw, 15vw);
+$planet-dimension: (20vw, 10vw);
+$sun-border-radius: (1vw, 2w);
+$radius: (33vw, 18vw);
+$rotation-duration: 60s;
+$pulsing-duration: 2s;
+$pulsing-scale: 0.9;
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  position: relative;
+}
+
+.universe {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+
+  @media screen and (min-width: 1024px) {
+    max-width: 50vw;
+  }
+}
+
+.orbit {
+  position: relative;
+  margin: auto;
+  padding: 100% 0 0;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+
+  .sun {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: nth($sun-dimension, 1);
+    height: nth($sun-dimension, 1);
+    border-radius: nth($sun-border-radius, 1);
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    z-index: 2;
+
+    @media screen and (min-width: 1024px) {
+      border-radius: nth($sun-border-radius, 2);
+      width: nth($sun-dimension, 2);
+      height: nth($sun-dimension, 2);
+    }
+
+    img {
+      display: block;
+      position: relative;
+      width: 100%;
+      height: auto;
+
+      &:nth-child(2) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+    }
+    &:hover {
+      img {
+        &:nth-child(2) {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  @keyframes planet-rotation {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes planet-pulsing {
+    // 0% {
+    //   transform: scaleX(1) scaleY(1);
+    // }
+    50% {
+      transform: scaleX($pulsing-scale) scaleY($pulsing-scale);
+    }
+    // 100% {
+    //   transform: scaleX(1) scaleY(1);
+    // }
+  }
+
+  .planets {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    width: nth($planet-dimension, 1);
+    height: nth($planet-dimension, 1);
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    @media screen and (min-width: 1024px) {
+      width: nth($planet-dimension, 2);
+      height: nth($planet-dimension, 2);
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      transform-origin: center;
+      display: block;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      animation: $rotation-duration linear 0s infinite forwards planet-rotation;
+
+      li {
+        position: absolute;
+        width: nth($planet-dimension, 1);
+        height: nth($planet-dimension, 1);
+        margin: 0;
+        padding: 0;
+        top: 0;
+        left: 0;
+        border-radius: 50%;
+        transform-origin: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        box-shadow: 0px 6px 12px rgba(19, 50, 82, 0.1);
+
+        @media screen and (min-width: 1024px) {
+          width: nth($planet-dimension, 2);
+          height: nth($planet-dimension, 2);
+        }
+        a {
+          position: relative;
+          display: block;
+          overflow: hidden;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        img {
+          position: relative;
+          display: block;
+          width: auto;
+          height: auto;
+          max-width: 45%;
+          animation: $rotation-duration linear 0s infinite reverse
+            planet-rotation;
+          @media screen and (min-width: 1024px) {
+            max-width: none;
+          }
+        }
+
+        span {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 10% 11%;
+          top: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          opacity: 0;
+          color: #fff;
+          font-size: clamp(0.75rem, 1vw - 0.5rem, 1.5rem);
+          animation: $rotation-duration linear 0s infinite reverse
+            planet-rotation;
+        }
+
+        &:hover {
+          span {
+            opacity: 1;
+          }
+        }
+
+        $totalPlanet: length($planet-list);
+
+        @each $planet in $planet-list {
+          $i: index($planet-list, $planet);
+          $theta: math.div(360deg, $totalPlanet) * ($totalPlanet - $i);
+
+          &:nth-child(#{$i}) {
+            // transform: translate3d($rx, $ry, 0);
+            top: nth($radius, 1) * math.sin($theta);
+            left: nth($radius, 1) * math.cos($theta);
+            background-color: nth($planet, 3);
+            animation: $pulsing-duration
+              linear
+              (500ms * $i)
+              infinite
+              forwards
+              planet-pulsing;
+
+            @media screen and (min-width: 1024px) {
+              top: nth($radius, 2) * math.sin($theta);
+              left: nth($radius, 2) * math.cos($theta);
+            }
+
+            a {
+              animation: none;
+            }
+
+            span {
+              background-color: nth($planet, 2);
+            }
+          }
+        }
+      }
+
+      &:hover {
+        animation-play-state: paused;
+        li {
+          &:hover {
+            animation-play-state: paused;
+          }
+          span,
+          img {
+            animation-play-state: paused;
+          }
+        }
+      }
+    }
+  }
+}
